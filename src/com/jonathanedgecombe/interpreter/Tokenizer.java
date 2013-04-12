@@ -15,7 +15,7 @@ public class Tokenizer {
 	private static List<String> relationalOperators = new ArrayList<>();
 	
 	
-	public static List<Token> tokenize(String line) {
+	public List<Token> tokenize(String line) {
 		List<Token> list = new ArrayList<>();
 		
 		CharacterBuffer buffer = new CharacterBuffer(line);
@@ -62,7 +62,7 @@ public class Tokenizer {
 	}
 	
 	
-	public static Token nextToken(CharacterBuffer buffer) {
+	public Token nextToken(CharacterBuffer buffer) {
 		String token = buffer.getNext();
 		
 		token = readWhitespace(token, buffer);
@@ -113,7 +113,7 @@ public class Tokenizer {
 	
 	
 	
-	public static String readWhitespace(String token, CharacterBuffer buffer) {
+	public String readWhitespace(String token, CharacterBuffer buffer) {
 		if (whitespace.contains(token)) {
 			//Skip whitespace
 			while (buffer.hasNext() && whitespace.contains(buffer.peek(0))) {
@@ -126,7 +126,7 @@ public class Tokenizer {
 		}
 	}
 	
-	public static Token readKeyword(String token, CharacterBuffer buffer) {
+	public Token readKeyword(String token, CharacterBuffer buffer) {
 		//Read remaining characters
 		while (buffer.hasNext() && characters.contains(buffer.peek(0).toLowerCase())) {
 			token += buffer.getNext();
@@ -140,14 +140,14 @@ public class Tokenizer {
 		}
 	}
 	
-	public static Token readNumber(String token, CharacterBuffer buffer) {
+	public Token readNumber(String token, CharacterBuffer buffer) {
 		while (buffer.hasNext() && digits.contains(buffer.peek(0))) {
 			token += buffer.getNext();
 		}
 		return new Token(TokenType.NUMBER, token);
 	}
 	
-	public static Token readString(CharacterBuffer buffer) {
+	public Token readString(CharacterBuffer buffer) {
 		String token = ""; //Ignore first quotation mark.
 		while (buffer.hasNext() && !(buffer.peek(0).equals("\"") && !(buffer.peek(-1).equals("\\")))) {
 			token += buffer.getNext();
@@ -156,7 +156,7 @@ public class Tokenizer {
 		return new Token(TokenType.STRING, token);
 	}
 	
-	public static Token readRelationalOperator(String token, CharacterBuffer buffer) {
+	public Token readRelationalOperator(String token, CharacterBuffer buffer) {
 		//Relational Operator
 		if (!token.equals("=") && buffer.hasNext() && relationalOperators.contains(buffer.peek(0))) {
 			return new Token(TokenType.RELOPERATOR, token+buffer.getNext());
@@ -189,7 +189,7 @@ public class Tokenizer {
 		
 		String variables = "abcdefghijklmnopqrstuvwxyz";
 		for (String variable : variables.split("")) {
-			Tokenizer.characters.add(variable);
+			characters.add(variable);
 		}
 		
 		operators.add("*");

@@ -27,8 +27,9 @@ public class Start {
 		
 		while (scanner.hasNextLine()) {
 			String line = scanner.nextLine();
-
-			List<Token> tokens = Tokenizer.tokenize(line);
+			
+			Tokenizer tokenizer = new Tokenizer();
+			List<Token> tokens = tokenizer.tokenize(line);
 			
 			Parser parser = new Parser(tokens);
 			Statement statement = parser.parse();
