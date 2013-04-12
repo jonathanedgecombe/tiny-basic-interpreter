@@ -61,6 +61,7 @@ public final class IfStatement extends Statement {
 			break;
 		case NOTEQUAL:
 			flag = (left != right);
+			break;
 		default:
 			flag = false;
 		}
