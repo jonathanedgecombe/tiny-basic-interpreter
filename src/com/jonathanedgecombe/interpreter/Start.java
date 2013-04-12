@@ -39,8 +39,6 @@ public class Start {
 			
 			if (lastStatement != null) lastStatement.setNextStatement(statement);
 			lastStatement = statement;
-			
-			//System.out.println(lastStatement);
 		}
 		
 		scanner.close();

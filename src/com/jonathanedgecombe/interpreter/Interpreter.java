@@ -24,10 +24,11 @@ public class Interpreter {
 	}
 	
 	private Statement statement;
+	
 	public void setInitialStatement() {
 		statement = statements.entrySet().iterator().next().getValue();
-		//System.out.println(statement);
 	}
+	
 	public void setStatement(int label) {
 		statement = statements.get(label);
 	}
