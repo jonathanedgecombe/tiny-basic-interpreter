@@ -1,0 +1,10 @@
+.*
+*~
+/data/world1
+/data/world2
+/data/hostbans.txt
+/bin
+*.ini
+*.iml
+!.git*
+!.mailmap
