@@ -57,7 +57,7 @@ public class Tokenizer {
 			} else if (token.equals(")")) {
 				return RIGHTPAREN;
 			}
-			throw new RuntimeException("COMPILER ERROR: Invalid token: '" + token + "'");
+			throw new RuntimeException("TOKENIZER ERROR: Invalid token: '" + token + "'");
 		}
 	}
 	
@@ -106,7 +106,7 @@ public class Tokenizer {
 			return new Token(TokenType.RIGHTPAREN, ")");
 			
 		default:
-			throw new RuntimeException("COMPILER ERROR - Invalid token: '" + token + "'");
+			throw new RuntimeException("TOKENIZER ERROR - Invalid token: '" + token + "'");
 
 		}
 	}
@@ -136,7 +136,7 @@ public class Tokenizer {
 		if (keywords.contains(token.toLowerCase())) {
 			return new Token(TokenType.KEYWORD, token.toLowerCase());
 		} else {
-			throw new RuntimeException("COMPILER ERROR - Invalid keyword: " + token);
+			throw new RuntimeException("TOKENIZER ERROR - Invalid keyword: " + token);
 		}
 	}
 	

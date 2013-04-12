@@ -18,14 +18,14 @@ public class Parser {
 	public Statement parse() {
 		int label = -1;
 		
-		if (token == null) throw new RuntimeException("COMPILER ERROR: Expected NUMBER or KEYWORD, received NONE");
+		if (token == null) throw new RuntimeException("PARSING ERROR: Expected NUMBER or KEYWORD, received NONE");
 		if (token.getType() == TokenType.NUMBER) {
 			label = Integer.parseInt(token.getValue());
 			consume();
 		}
 		
-		if (token == null) throw new RuntimeException("COMPILER ERROR: Expected KEYWORD, received NONE");
-		if (token.getType() != TokenType.KEYWORD) throw new RuntimeException("COMPILER ERROR: Expected KEYWORD, received " + token.getType().name());
+		if (token == null) throw new RuntimeException("PARSING ERROR: Expected KEYWORD, received NONE");
+		if (token.getType() != TokenType.KEYWORD) throw new RuntimeException("PARSING ERROR: Expected KEYWORD, received " + token.getType().name());
 		
 		switch(token.getValue()) {
 		
@@ -50,13 +50,13 @@ public class Parser {
 			consume();
 			Expression leftExpression = parseExpression();
 
-			if (token.getType() != TokenType.RELOPERATOR) throw new RuntimeException("COMPILER ERROR: Expected relational operator");
+			if (token.getType() != TokenType.RELOPERATOR) throw new RuntimeException("PARSING ERROR: Expected relational operator");
 			OperatorType op = OperatorType.forString(token.getValue());
 			
 			consume();
 			Expression rightExpression = parseExpression();
 			
-			if (token.getType() != TokenType.KEYWORD || !token.getValue().equals("then")) throw new RuntimeException("COMPILER ERROR: Unexpected token, expected THEN");
+			if (token.getType() != TokenType.KEYWORD || !token.getValue().equals("then")) throw new RuntimeException("PARSING ERROR: Unexpected token, expected THEN");
 			
 			consume();
 			Statement statement = parse();
@@ -65,7 +65,7 @@ public class Parser {
 			
 		case "goto":
 			consume();
-			if (token.getType() != TokenType.NUMBER) throw new RuntimeException("COMPILER ERROR: Goto only supports static labels");
+			if (token.getType() != TokenType.NUMBER) throw new RuntimeException("PARSING ERROR: Goto only supports static labels");
 			return new GotoStatement(label, new NumberExpression(Integer.parseInt(token.getValue())));
 		
 		case "input":
@@ -82,18 +82,18 @@ public class Parser {
 			
 		case "let":
 			consume();
-			if (token.getType() != TokenType.VARIABLE) throw new RuntimeException("COMPILER ERROR: Gosub only supports static labels");
+			if (token.getType() != TokenType.VARIABLE) throw new RuntimeException("PARSING ERROR: Gosub only supports static labels");
 			Expression var = new VariableExpression(token.getValue());
 			
 			consume();
-			if (token.getType() != TokenType.RELOPERATOR || !token.getValue().equals("=")) throw new RuntimeException("COMPILER ERROR: Unexcpected token, expected '='");
+			if (token.getType() != TokenType.RELOPERATOR || !token.getValue().equals("=")) throw new RuntimeException("PARSING ERROR: Unexcpected token, expected '='");
 			
 			consume();
 			return new LetStatement(label, var, parseExpression());
 			
 		case "gosub":
 			consume();
-			if (token.getType() != TokenType.NUMBER) throw new RuntimeException("COMPILER ERROR: Gosub only supports static labels");
+			if (token.getType() != TokenType.NUMBER) throw new RuntimeException("PARSING ERROR: Gosub only supports static labels");
 			return new GosubStatement(label, new NumberExpression(Integer.parseInt(token.getValue())));
 		
 		case "return":
@@ -103,7 +103,7 @@ public class Parser {
 			return new EndStatement(label);
 		}
 		
-		throw new RuntimeException("COMPILER ERROR: Invalid keyword: '" + token.getValue() + "'");
+		throw new RuntimeException("PARSING ERROR: Invalid keyword: '" + token.getValue() + "'");
 	}
 	
 	public Expression parseExpression() {

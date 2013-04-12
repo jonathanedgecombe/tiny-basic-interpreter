@@ -36,7 +36,7 @@ public enum OperatorType {
 		case "*":
 			return MULTIPLY;
 		default:
-			throw new RuntimeException("COMPILER ERROR -  Invalid operator '" + data + "'");
+			throw new RuntimeException("PARSING ERROR -  Invalid operator '" + data + "'");
 		}
 	}
 }
